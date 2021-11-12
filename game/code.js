@@ -100,16 +100,16 @@ function draw() {
         else if (score >= 0 && score < 50) {
             text("without anyone knowing your existence", 125, 350);
         }
-        else if (score >= 50 && score < 200) {
+        else if (score >= 50 && score < 100) {
             text("People held a funeral to honor you", 135, 350);
         }
-        else if (score >= 200 && score < 500) {
+        else if (score >= 150 && score < 200) {
             text("You are listed as one of the heroes", 130, 350);
         }
-        else if (score >= 500 && score < 1000) {
+        else if (score >= 200 && score < 250) {
             text("Many cried for you, including the dead", 125, 350);
         }
-        else if (score >= 1000) {
+        else if (score >= 250) {
             text("Your a legend!", 225, 350);
             text("You will be forever remembered", 145, 400);
         }
@@ -155,7 +155,7 @@ function draw() {
          //var less = 0;
         if (ghostGroup.get(i).x <= 300 && test < ghostGroup.length) {
             
-            console.log(ghostGroup.get(i).x);
+            //console.log(ghostGroup.get(i).x);
             ghostGroup.get(i).changeAnimation("crazy");
             ghostGroup.get(i).frameDelay = 6
             test += 1;
@@ -237,8 +237,10 @@ function keyPressed() {
         shoot.visible = false;
         shoot.scale = 0.10;
         shoot.addImage(shootImg);
-        shootLeft -= 1;
+        //shootLeft -= 1;
     }
+
+
     if (keyCode === UP_ARROW && gamestates == 1 && foodLeft > 0) {
         var type;
         food = createSprite(50, player.y, 1, 1);
@@ -262,24 +264,30 @@ function keyPressed() {
         else if (type == 6) {
             food.addImage(foodImg6);
         }
-        foodLeft -= 1;
+        //foodLeft -= 1;
+    }
+
+    if(keyCode === 82){
+        window.location.reload();
     }
 
 }
 
 function keyReleased() {
-    if (keyCode === DOWN_ARROW && gamestates == 1) {
+    if (keyCode === DOWN_ARROW && gamestates == 1 && shootLeft>0) {
         shoot.y = player.y;
         shoot.visible = true;
         shoot.velocityX = 7;
         shoot.lifetime = 600 / 7;
+        shootLeft -= 1;
     }
 
-    if (keyCode === UP_ARROW && gamestates == 1) {
+    if (keyCode === UP_ARROW && gamestates == 1 && foodLeft >0) {
         food.y = player.y;
         food.visible = true;
         food.velocityX = 7;
         food.lifetime = 600 / 7;
+        foodLeft -= 1;
     }
 
 }
@@ -297,7 +305,7 @@ function spawnmonsters() {
 }
 
 function spawnghost() {
-    if (frameCount % 180 == 0) {
+    if (frameCount % 170 == 0) {
         ghost = createSprite(610, Math.round(random(50, 500)), 1, 1);
         ghost.scale = 0.75;
         ghost.addAnimation("neutral", ghostImg);
